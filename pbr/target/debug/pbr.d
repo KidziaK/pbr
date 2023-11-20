@@ -1,0 +1,1 @@
+/home/mikolaj/Documents/projects/pbr/pbr/target/debug/pbr: /home/mikolaj/Documents/projects/pbr/pbr/src/color.rs /home/mikolaj/Documents/projects/pbr/pbr/src/image.rs /home/mikolaj/Documents/projects/pbr/pbr/src/main.rs /home/mikolaj/Documents/projects/pbr/pbr/src/math.rs
