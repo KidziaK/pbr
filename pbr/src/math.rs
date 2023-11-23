@@ -1,6 +1,8 @@
+use std::fmt;
 use std::ops::{Add, BitAnd, BitOr, BitXor, Mul, Sub};
 use std::marker::Copy;
 use crate::errors::Error;
+use crate::ray::Ray;
 
 #[derive(Debug)]
 pub struct Float3 {
@@ -50,6 +52,10 @@ impl Float3 {
 
     pub fn zero() -> Float3 {
         return Float3::new(0.0, 0.0, 0.0);
+    }
+
+    pub fn reflect(&self, n: Float3) -> Float3 {
+        todo!();
     }
 }
 
@@ -153,23 +159,49 @@ impl BitXor for Float3 {
 
     fn bitxor(self, rhs: Self) -> Self::Output {
         return Float3 {
-            x: self.x * rhs.y - self.y * rhs.x,
-            y: self.y * rhs.z - self.z * rhs.y,
-            z: self.z * rhs.x - self.x * rhs.z,
+            x: self.y * rhs.z - self.z * rhs.y,
+            y: self.z * rhs.x - self.x * rhs.z,
+            z: self.x * rhs.y - self.y * rhs.x,
         }
+    }
+}
+
+impl fmt::Display for Float3 {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({}, {}, {})", self.x, self.y, self.z)
     }
 }
 
 
 #[derive(Debug)]
-struct Sphere {
-    o: Float3,
-    r: f32
+pub struct Sphere {
+    center: Float3,
+    radius: f32
 }
 
 impl Sphere {
-    fn area(&self) -> f32 {
-        return self.r.powi(2) * std::f32::consts::PI;
+    pub fn new(center: Float3, radius: f32) -> Sphere {
+        return Sphere {
+            center,
+            radius
+        };
+    }
+    pub fn area(&self) -> f32 {
+        return self.radius.powi(2) * std::f32::consts::PI;
     }
 
+    pub fn is_hit(&self, ray: Ray) -> bool {
+        let o_c = ray.origin - self.center;
+        let a = ray.direction | ray.direction;
+        let b = 2.0 * ray.direction | o_c;
+        let c = (o_c | o_c) - self.radius.powi(2);
+
+        let delta = b * b - 4.0 * a * c;
+
+        if delta > 0.0 {
+            return true;
+        }
+
+        return false;
+    }
 }

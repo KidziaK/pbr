@@ -1,12 +1,19 @@
 use crate::math::Float3;
 
+#[derive(Debug)]
 pub struct Ray {
-    origin: Float3,
-    direction: Float3
+    pub origin: Float3,
+    pub direction: Float3
 }
 
 impl Ray {
-    fn at(self, t: f32) -> Float3 {
+    pub fn new(origin: Float3, direction: Float3) -> Ray {
+        return Ray {
+            origin,
+            direction
+        };
+    }
+    pub fn at(self, t: f32) -> Float3 {
         return self.origin + t * self.direction;
     }
 }
