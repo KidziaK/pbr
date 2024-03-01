@@ -190,7 +190,7 @@ impl Sphere {
         return self.radius.powi(2) * std::f32::consts::PI;
     }
 
-    pub fn is_hit(&self, ray: Ray) -> bool {
+    pub fn is_hit(&self, ray: &Ray) -> bool {
         let o_c = ray.origin - self.center;
         let a = ray.direction | ray.direction;
         let b = 2.0 * ray.direction | o_c;

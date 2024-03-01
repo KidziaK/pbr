@@ -29,6 +29,7 @@ fn main() {
     let height = 500;
 
     let sphere = Sphere::new(Float3::i(), 0.1);
+    let sphere2 = Sphere::new(Float3::new(1.0, 0.1, 0.0), 0.1);
 
     // Image
     let mut img = Image::<RGB>::blank(width, height);
@@ -38,8 +39,12 @@ fn main() {
         for j in 0..width {
             let ray = cam.ray_at_pixel(i, j, width, height);
 
-            if sphere.is_hit(ray) {
+            if sphere.is_hit(&ray) {
                 img.write_pixel(i, j, RGB::new(255.0, 0.0, 0.0));
+            }
+
+            if sphere2.is_hit(&ray) {
+                img.write_pixel(i, j, RGB::new(0.0, 255.0, 0.0));
             }
         }
     }
